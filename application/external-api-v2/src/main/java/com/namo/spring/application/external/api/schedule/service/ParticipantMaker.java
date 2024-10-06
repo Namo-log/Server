@@ -31,8 +31,12 @@ public class ParticipantMaker {
         Category category;
         if (categoryId != null) {
             category = categoryService.readCategoryByMemberAndId(categoryId, member);
-        } else
-            category = categoryService.readMeetingCategoryByMember(member);
+        } else {
+            if(schedule.getIsMeetingSchedule()) {
+                category = categoryService.readMeetingCategoryByMember(member);
+            }
+            else category = categoryService.readBirthdayCategoryByMember(member);
+        }
         Palette palette = paletteId != null ? paletteService.getPalette(paletteId) :  null;
 
         Participant participant;

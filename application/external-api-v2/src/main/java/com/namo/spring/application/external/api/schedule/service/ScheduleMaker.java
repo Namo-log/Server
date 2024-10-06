@@ -50,14 +50,14 @@ public class ScheduleMaker {
      * 유저의 올해 / 다음 해의 생일 일정을 생성합니다.
      * @param member
      */
-    public void createBirthdaySchedules(Member member){
+    public List<Schedule> createBirthdaySchedules(Member member){
         int currentYear = LocalDate.now().getYear();
         String title = member.getNickname() + "님의 생일";
         Period currentYearPeriod = toPeriodOfBirthdaySchedule(member, currentYear);
         Period nextYearPeriod = toPeriodOfBirthdaySchedule(member, currentYear+1);
         Schedule currentYearBirthday = toBirthdaySchedule(title, currentYearPeriod);
         Schedule nextYearBirthday = toBirthdaySchedule(title, nextYearPeriod);
-        scheduleService.createSchedules(List.of(currentYearBirthday, nextYearBirthday));
+        return scheduleService.createSchedules(List.of(currentYearBirthday, nextYearBirthday));
     }
 
     /**

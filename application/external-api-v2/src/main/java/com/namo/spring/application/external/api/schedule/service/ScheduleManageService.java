@@ -41,7 +41,6 @@ public class ScheduleManageService {
     private final ScheduleService scheduleService;
     private final ParticipantManageService participantManageService;
     private final ParticipantService participantService;
-    private final FriendshipService friendshipService;
     private final CategoryManageService categoryManageService;
 
     public Schedule getSchedule(Long scheduleId) {
@@ -304,6 +303,12 @@ public class ScheduleManageService {
                 },
                 // 참여자가 방장만 존재할 경우 모임 일정을 삭제
                 () -> scheduleService.deleteSchedule(schedule.getId())
+        );
+    }
+
+    public void createBirthdaySchedules(Member member) {
+        scheduleMaker.createBirthdaySchedules(member).forEach(schedule ->
+                participantManageService.createPersonalScheduleParticipant(member, schedule, null)
         );
     }
 

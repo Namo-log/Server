@@ -3,6 +3,7 @@ package com.namo.spring.application.external.api.user.facade;
 import java.util.List;
 import java.util.Map;
 
+import com.namo.spring.application.external.api.schedule.service.ScheduleMaker;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,7 @@ public class AuthFacade {
     private final MemberManageService memberManageService;
     private final TagGenerator tagGenerator;
     private final PaletteService paletteService;
+    private final ScheduleMaker scheduleMaker;
 
     @Transactional
     public MemberResponse.SignUpDto socialSignup(MemberRequest.SocialSignUpDto signUpDto, SocialType socialType) {
@@ -115,6 +117,7 @@ public class AuthFacade {
         member.signUpComplete(dto.getName(), dto.getNickname(), dto.getBirthday(), dto.getBio(), tag, palette,
                 dto.getProfileImage());
         memberManageService.saveMember(member);
+        scheduleMaker.createBirthdaySchedules(member);
         return member;
     }
 }
