@@ -22,8 +22,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void createSchedules(List<Schedule> schedule) {
-        scheduleRepository.saveAll(schedule);
+    public List<Schedule> createSchedules(List<Schedule> schedule) {
+        return scheduleRepository.saveAll(schedule);
     }
 
     @Transactional(readOnly = true)

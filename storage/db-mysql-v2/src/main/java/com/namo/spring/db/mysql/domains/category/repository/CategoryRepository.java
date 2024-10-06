@@ -18,5 +18,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("select c from Category c join c.member where c.member= :member and c.type = '2'")
     Optional<Category> findMeetingCategoryByMember(@Param("member") Member member);
 
+    @Query("select c from Category c join c.member where c.member= :member and c.type = '4'")
+    Optional<Category> findBirthdayCategoryByMember(@Param("member") Member member);
+
     List<Category> findCategoryByMemberId(Long memberId);
 }

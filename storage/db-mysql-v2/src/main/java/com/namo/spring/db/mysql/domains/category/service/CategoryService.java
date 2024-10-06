@@ -45,6 +45,13 @@ public class CategoryService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public Category readBirthdayCategoryByMember(Member member) {
+        return categoryRepository.findBirthdayCategoryByMember(member).orElseThrow(
+                () -> new CategoryException(ErrorStatus.NOT_FOUND_CATEGORY_FAILURE)
+        );
+    }
+
     @Transactional
     public Category updateCategory(Category category) {
         return categoryRepository.save(category);
