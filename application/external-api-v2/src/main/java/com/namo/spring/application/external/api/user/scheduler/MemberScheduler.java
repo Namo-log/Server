@@ -25,10 +25,20 @@ public class MemberScheduler {
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void removeInactiveUsersFromDB() {
-        List<Member> inactiveMembers = memberManageService.getInactiveMember();
+        List<Member> inactiveMembers = memberManageService.getInactiveMembers();
         for (Member member : inactiveMembers) {
             log.debug("[Delete] user name : " + member.getName());
             // TODO : 관련 삭제
+            memberManageService.removeMember(member);
+        }
+    }
+
+    @Scheduled(cron = "0 0 * * * *")
+    @Transactional
+    public void removePendingUsersFromDB() {
+        List<Member> pendingMembers = memberManageService.getPendingMembers();
+        for (Member member : pendingMembers) {
+            log.debug("[Delete PENDING] user name: {}", member.getName());
             memberManageService.removeMember(member);
         }
     }

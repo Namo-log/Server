@@ -67,8 +67,12 @@ public class MemberManageService {
         return memberRepository.findMemberByEmailAndSocialType(email, socialType);
     }
 
-    public List<Member> getInactiveMember() {
+    public List<Member> getInactiveMembers() {
         return memberRepository.findMembersByStatusAndDate(MemberStatus.INACTIVE, LocalDateTime.now().minusDays(3));
+    }
+
+    public List<Member> getPendingMembers() {
+        return memberRepository.findMembersByStatusAndDate(MemberStatus.PENDING, LocalDateTime.now().minusHours(1));
     }
 
     public Member saveMember(Member member) {
