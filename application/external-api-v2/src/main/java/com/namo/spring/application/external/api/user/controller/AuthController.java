@@ -64,9 +64,11 @@ public class AuthController{
         return ResponseDto.onSuccess(MemberConverter.toSignUpDoneDto(target));
     }
 
+    @PreAuthorize("@memberSecurity.hasCompletedSignUp(#member.userId)")
     @Operation(summary = "토큰 재발급", description = "토큰 재발급")
     @PostMapping(value = "/reissuance")
     public ResponseDto<MemberResponse.ReissueDto> reissueAccessToken(
+            @AuthenticationPrincipal SecurityUserDetails member,
             @RequestHeader(value = "refreshToken") String refreshToken
     ) {
         return ResponseDto.onSuccess(memberFacade.reissueAccessToken(refreshToken));
