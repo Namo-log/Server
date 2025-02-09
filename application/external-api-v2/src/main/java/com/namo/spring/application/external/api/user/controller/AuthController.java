@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -103,6 +104,22 @@ public class AuthController{
         String accessToken = authHeader.split(" ")[1];
         memberFacade.removeSocialMember(member.getUserId(), accessToken, refreshToken);
         return ResponseDto.onSuccess("회원탈퇴가 완료되었습니다.");
+    }
+
+    @Operation(summary = "!!!!!!!!!!!!!!!!즉시 회원 탈퇴!!!!!!!!!!!!", description = """
+            즉시 회원을 탈퇴합니다. 절대 복구가 불가능합니다
+            테스트용으로만 사용해주세요!!!!!!!!!!!!!!!!
+            """)
+    @DeleteMapping("/admin/{socialType}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseDto<String> removeUserImmediate(
+            @RequestHeader(value = "Authorization") String authHeader,
+            @RequestHeader(value = "refreshToken") String refreshToken,
+            @AuthenticationPrincipal SecurityUserDetails member
+    ) {
+        String accessToken = authHeader.split(" ")[1];
+        memberFacade.removeMemberNow(member.getUserId(), accessToken, refreshToken);
+        return ResponseDto.onSuccess("즉시 회원탈퇴가 완료되었습니다.");
     }
 
 }
