@@ -120,4 +120,12 @@ public class AuthFacade {
         scheduleMaker.createBirthdaySchedules(savedMember);
         return member;
     }
+
+    @Transactional
+    public void removeMemberNow(Long memberId, String accessToken, String refreshToken) {
+        Member member = memberManageService.getMember(memberId);
+        socialLoginService.unlinkSocialAccount(member);
+        jwtAuthHelper.removeJwtsToken(memberId, accessToken, refreshToken);
+        memberManageService.removeMember(member);
+    }
 }
