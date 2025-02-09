@@ -86,7 +86,6 @@ public class MemberManageService {
     }
 
     public MemberDto.MemberCreationRecord updateExistingMember(Member existingMember, String socialRefreshToken) {
-        existingMember.changeToActive();
         existingMember.updateSocialRefreshToken(socialRefreshToken);
         return new MemberDto.MemberCreationRecord(existingMember, false);
     }
