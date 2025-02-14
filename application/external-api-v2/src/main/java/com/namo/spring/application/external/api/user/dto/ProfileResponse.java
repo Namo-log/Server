@@ -12,6 +12,7 @@ public class ProfileResponse {
     public static class ProfileInfoDto{
         private String nickname;
         private String name;
+        private String tag;
         private boolean isNameVisible;
         private LocalDate birthdate;
         private boolean isBirthdayVisible;
