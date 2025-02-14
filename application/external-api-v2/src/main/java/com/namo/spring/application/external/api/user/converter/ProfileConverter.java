@@ -9,6 +9,7 @@ public class ProfileConverter {
         return ProfileResponse.ProfileInfoDto.builder()
                 .nickname(member.getNickname())
                 .name(member.getName())
+                .tag(member.getTag())
                 .isNameVisible(member.isNameVisible())
                 .isBirthdayVisible(member.isBirthdayVisible())
                 .birthdate(member.getBirthday())
