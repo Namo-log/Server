@@ -36,6 +36,7 @@ import com.namo.spring.db.mysql.domains.category.entity.Palette;
 import com.namo.spring.db.mysql.domains.notification.entity.Device;
 import com.namo.spring.db.mysql.domains.point.entity.Point;
 import com.namo.spring.db.mysql.domains.schedule.entity.Participant;
+import com.namo.spring.db.mysql.domains.shop.entity.MemberTheme;
 import com.namo.spring.db.mysql.domains.user.type.MemberRole;
 import com.namo.spring.db.mysql.domains.user.type.MemberStatus;
 import com.namo.spring.db.mysql.domains.user.type.SocialType;
@@ -131,6 +132,9 @@ public class Member extends BaseTimeEntity implements User {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participant> participants;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MemberTheme> ownedThemes;
 
     @Builder
     public Member(String name, String tag, LocalDate birthday, String authId, String email,
